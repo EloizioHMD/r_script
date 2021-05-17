@@ -11,11 +11,10 @@
 install.packages("usethis")
 library(usethis)
 
+# V
 # Se apresentar para o git
 usethis::use_git_config(user.name = "Eloízio Dantas",
                         user.email = "eloiziohmd@hotmail.com")
-
-git_sitrep()
 
 # Editar o arquivo .Renviron
 # O Renviron é um arquivo que fica no RStudio para armazenar dados sensíveis,
