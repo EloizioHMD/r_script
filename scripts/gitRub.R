@@ -1,7 +1,9 @@
+#' ---------------------------------------------------------------------------
 #' Script para Configurar o Git e Github no RStudio
-#' por Eloízio Dantas
+#' por Eloízio Dantas, em 16 de maio de 2021.
 #' base na palestra do Jean Prado na Hacktoberfest 2020 da R-Ladies São Paulo
 #' [Link do vídeo no youtube](https://www.youtube.com/watch?v=2gmofUthjKk)
+#' ---------------------------------------------------------------------------
 
 #' Instalação do Pacote [usethis](https://usethis.r-lib.org/)
 #' O usethis desenvolvido automatizar tarefas repetitivas que surgem durante
