@@ -10,6 +10,7 @@ _Bom, primeiramente seja bem vindo(a), aproveite tudo e não repare na bagunça.
 
 2021-05-16 - [Script para Configurar o Git e Github no RStudio](https://github.com/EloizioHMD/r_script/blob/main/scripts/gitRub.R)<br>
 2021-05-17 - [Script para Produção de Mapas com o TMAP](https://github.com/EloizioHMD/r_script/blob/main/scripts/tMap.R)<br>
+2021-05-18 - [Scrpit para calcular e espacilizar ΔNBR pelos dados MODIS](https://github.com/EloizioHMD/r_script/blob/main/scripts/dnbrR.R)<br>
 
 ## Sobre mim
 Oi, eu sou o Eloízio, formado em Direito e Engenharia Ambiental e Sanitária, Especialista em Geociências e Geotecnologias, Nerd das antigas e agora exploRando o R. [Para mais informações me siga nas redes](https://linktr.ee/eloiziodantas).
