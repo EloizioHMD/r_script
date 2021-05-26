@@ -8,19 +8,19 @@
 
 gc() # Limpar a memória
 
-pkg <- c("raster", "sf", "sp", "rgdal", "dplyr", "MODIStsp", "tmap","MODIS",
+pkg <- c("raster", "sf", "sp", "rgdal", "dplyr", "MODIStsp", "tmap", "MODIS",
          "tmaptools", "gdalUtilities", "gdalUtils", "rgeos", "kableExtra", "geobr")
 sapply(pkg, require, character.only = T)
 ## instale os pacotes que deram FALSE.
-## install.packages("pacote")
+## install.packages("pacete")
 ## O MODIStsp é um pacote desenvolvido em shiny, talvez precise de mais pacotes
 
 rm(list = ls()) # Serve para limpa o ambiente de trabalho
 
 # Baixando dados -------------------------------------------------------------
 
-MODIStsp() # data inicial
-MODIStsp() # data final
+MODIStsp() # data pre-fogo band2(nir) band7(lswir)
+MODIStsp() # data pos-fogo band2(nir) band7(lswir)
 
 pantanal_lim <- geobr::read_biomes(year = 2019) %>%
   filter(code_biome == 6) %>%
@@ -30,7 +30,7 @@ tm_shape(pantanal_lim) + tm_sf() # Verificação da polígonal
 
 # Preparando dados MODIS -----------------------------------------------------
 # Lendo arquivo hdf 
-nome_hdf <- list.files(path = "~/R/R_scripts/r_script/scripts/delta_nbr", 
+nome_hdf <- list.files(path = "scripts/data_nbr/", 
                        pattern = ".hdf$", 
                        full.names = T)
 
@@ -48,14 +48,14 @@ list_raster <- list()
 
 list_raster[[1]] <- raster(readGDAL(hdf_list[[1]][["SDS4gdal"]][2], as.is = TRUE))
 list_raster[[2]] <- raster(readGDAL(hdf_list[[2]][["SDS4gdal"]][2], as.is = TRUE))
-list_raster[[3]] <- raster(readGDAL(hdf_list[[1]][["SDS4gdal"]][6], as.is = TRUE))
-list_raster[[4]] <- raster(readGDAL(hdf_list[[2]][["SDS4gdal"]][6], as.is = TRUE))
+list_raster[[3]] <- raster(readGDAL(hdf_list[[1]][["SDS4gdal"]][7], as.is = TRUE))
+list_raster[[4]] <- raster(readGDAL(hdf_list[[2]][["SDS4gdal"]][7], as.is = TRUE))
 list_raster[[5]] <- raster(readGDAL(hdf_list[[3]][["SDS4gdal"]][2], as.is = TRUE))
 list_raster[[6]] <- raster(readGDAL(hdf_list[[4]][["SDS4gdal"]][2], as.is = TRUE))
-list_raster[[7]] <- raster(readGDAL(hdf_list[[3]][["SDS4gdal"]][6], as.is = TRUE))
-list_raster[[8]] <- raster(readGDAL(hdf_list[[4]][["SDS4gdal"]][6], as.is = TRUE))
+list_raster[[7]] <- raster(readGDAL(hdf_list[[3]][["SDS4gdal"]][7], as.is = TRUE))
+list_raster[[8]] <- raster(readGDAL(hdf_list[[4]][["SDS4gdal"]][7], as.is = TRUE))
 
-nomes <- c("2019.b2.1", "2019.b2.2", "2019.b6.1", "2019.b6.2", "2020.b2.1", "2020.b2.2", "2020.b6.1", "2020.b6.2")
+nomes <- c("2019.b2.1", "2019.b2.2", "2019.b7.1", "2019.b7.2", "2020.b2.1", "2020.b2.2", "2020.b7.1", "2020.b7.2")
 
 names(list_raster) <- nomes
 
@@ -63,24 +63,26 @@ names(list_raster) <- nomes
 b2_2019_mosaico <- mosaic(list_raster[["2019.b2.1"]],
                           list_raster[["2019.b2.2"]], fun = mean)
 
-b6_2019_mosaico <- mosaic(list_raster[["2019.b6.1"]],
-                          list_raster[["2019.b6.2"]], fun = mean)
+b7_2019_mosaico <- mosaic(list_raster[["2019.b7.1"]],
+                          list_raster[["2019.b7.2"]], fun = mean)
 
 b2_2020_mosaico <- mosaic(list_raster[["2020.b2.1"]],
                           list_raster[["2020.b2.2"]], fun = mean)
 
-b6_2020_mosaico <- mosaic(list_raster[["2020.b6.1"]],
-                          list_raster[["2020.b6.2"]], fun = mean)
+b7_2020_mosaico <- mosaic(list_raster[["2020.b7.1"]],
+                          list_raster[["2020.b7.2"]], fun = mean)
 
 # Calculando o Normalized Burn Ratio (NBR) -----------------------------------
+# Measuring Burn Severity in Forests of South-West Western Australia Using MODIS
+# https://core.ac.uk/download/pdf/35082193.pdf
 f.nbr <- function(x, y){
   nbr <- (x - y) / (x + y)
   return(nbr)
 }
 
-nbr_2019 <- f.nbr(b2_2019_mosaico, b6_2019_mosaico)
+nbr_2019 <- f.nbr(b2_2019_mosaico, b7_2019_mosaico)
 
-nbr_2020 <- f.nbr(b2_2020_mosaico, b6_2020_mosaico)
+nbr_2020 <- f.nbr(b2_2020_mosaico, b7_2020_mosaico)
 
 # Visualização do NBR 2019-2020 ----------------------------------------------
 nbr_2019_fig <- tm_shape(nbr_2019, raster.downsample = T) +
@@ -156,7 +158,7 @@ n_classes <- c("Alta regeneração pós-fogo",
                "Queimada de gravidade moderada-alta",
                "Queimada de alta gravidade")
 
-categ <- data.frame("categoria" = n_classes, "area_km_2" = area_classe[, 2])
+categ <- list("categoria" = n_classes, "area_km_2" = area_classe[, 2])
 
 # Criando mapa final ---------------------------------------------------------
 # Definindo extensão 
@@ -203,7 +205,7 @@ mapa_pronto <- tm_shape(reclas_nbr, raster.downsample = F, bbox = bbox.pantanal)
 mapa_pronto
 
 # Salvando mapa --------------------------------------------------------------
-tmap::tmap_save(mapa_pronto, filename = "/home/eloiziodantas/R/R_scripts/r_script/scripts/delta_nbr/mapa_pronto.png",
+tmap::tmap_save(mapa_pronto, filename = "scripts/data_nbr/delta_nbr_mapafinal.png",
           dpi = 600, 
           width = 12, 
           height = 6.75, 
