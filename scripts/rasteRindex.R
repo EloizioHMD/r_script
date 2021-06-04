@@ -81,7 +81,7 @@ indices$AFI <- log((0.69 - indices$SAVI)/(0.59))/0.91
 indices$EVI <- 2.5 * ((indices$band5 - indices$band4)/(indices$band5 + 6 * indices$band4 - 7.5 * indices$band2 + 1))
 
 # Indice de agua da diferenca normalizada (NDWI)
-indices$NDWI <- (indices$band3 - indices$band6)/(indices$band3 + indices$band6)
+indices$NDWI <- (indices$band3 - indices$band5)/(indices$band3 + indices$band5)
 
 # Salvando imagem com os indices
 writeRaster(x = indices, filename = "scripts/petrolina-juazeiro/raster/area_indices.tif")
