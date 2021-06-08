@@ -8,10 +8,11 @@ _Bom, primeiramente seja bem vindo(a), aproveite tudo e não repare na bagunça.
 
 ## Meus scripts
 
-2021-05-16 - [Script para Configurar o Git e Github no RStudio](https://github.com/EloizioHMD/r_script/blob/main/scripts/gitRub.R)<br>
-2021-05-17 - [Script para Produção de Mapas com o TMAP](https://github.com/EloizioHMD/r_script/blob/main/scripts/tMap.R)<br>
-2021-05-18 - [Script para calcular e espacilizar ΔNBR pelos dados MODIS](https://github.com/EloizioHMD/r_script/blob/main/scripts/dnbrR.R)<br>
-2021-06-01 - [Script para Carregamento de Raster e Aplicação de Índice espectrais](https://github.com/EloizioHMD/r_script/blob/main/scripts/rasteRindex.R)<br>
+2021-05-16 - [Configurar o Git e Github no RStudio](https://github.com/EloizioHMD/r_script/blob/main/scripts/gitRub.R)<br>
+2021-05-17 - [Produção de Mapas com o TMAP](https://github.com/EloizioHMD/r_script/blob/main/scripts/tMap.R)<br>
+2021-05-18 - [Calcular e espacilizar ΔNBR pelos dados MODIS](https://github.com/EloizioHMD/r_script/blob/main/scripts/dnbrR.R)<br>
+2021-06-01 - [Carregamento de Raster e Aplicação de Índice espectrais - P1/3](https://github.com/EloizioHMD/r_script/blob/main/scripts/rasteRindex.R)<br>
+2021-06-08 - [Exploração de dados e elaboração dados preliminar para classificação - P2/3](https://github.com/EloizioHMD/r_script/blob/main/scripts/rasteRexplorer.R)<br>
 
 ## Sobre mim
 Oi, eu sou o Eloízio, formado em Direito e Engenharia Ambiental e Sanitária, Especialista em Geociências e Geotecnologias, Nerd das antigas e agora exploRando o R. [Para mais informações me siga nas redes](https://linktr.ee/eloiziodantas).
