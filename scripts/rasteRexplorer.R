@@ -1,7 +1,7 @@
 #' ---------------------------------------------------------------------------
 #' Script exploração de dados e elaboração dados preliminar para classificação
 #' Serie R Classificação Machine Learning Parte 2
-#' por Eloízio Dantas, em 2021-06-07
+#' por Eloízio Dantas, em 2021-06-08
 #' Baseado no curso da [RadarGeo](http://plataformaradargeo.com.br/curso_processamento_imagem/)
 #' Processamento de imagens de satélite com software "R"
 #' ---------------------------------------------------------------------------
