@@ -1,0 +1,81 @@
+---
+title: "R Notebook Gráfico de Regressão Linear"
+output: html_notebook_R_reglm
+---
+
+Olá, esse R Notebook, usando para testar sua usabilidade e desempenho. Nesse notebook estou realizando o Curso de Análise de Dados do [Marcel Santos](https://mercelsantos.com/) e para quem desejar replicar vou deixar aqui o link dos [dados do evento](https://mercelsantos.com/dados_aulas/evento_aula2.zip).
+
+### Verificação, instalação e carregamento dos pacotes
+
+```{r}
+pkg <- c('readxl', 'ggpubr', 'ggcorrplot')
+sapply(pkg, require, character.only=T)
+```
+
+```{r}
+install.packages(pkg)
+```
+
+Caso no primeiro chunk tenha dado False, proceder a instalação do objeto `pkg` ou individualmente.
+
+```{r}
+library(readxl)
+library(ggplot2)
+library(ggpubr)
+```
+
+### Carregar os dados
+
+Usando R Cloud, pode carregar dados múltiplos usando uma arquivo compactado usando o botão no `Files > Upload` depois é só usar o `setwd()`.
+
+```{r}
+setwd("/cloud/project/evento_aula2") # definir área de trabalho
+```
+
+```{r}
+alunos <- read_excel('dados/alunos.xlsx')
+summary(alunos)
+```
+
+### Gráficos de Regressão
+
+```{r}
+ggplot(alunos, aes(x=horas,y=notas))+
+  geom_point(shape=21, size=2.5, fill='lightblue', col='blue')+
+  geom_smooth(method='lm', col='tomato', se=FALSE,  formula='y ~ x')+
+  stat_regline_equation(
+    aes(label=paste(..eq.label..,..rr.label.., sep='~~~'))
+    )+
+  labs(x='Horas', y='Notas', Title='Gráfico de Regressão')+
+  theme_light()
+```
+
+### Salvar o gráfico
+
+```{r}
+ggsave(filename = '/cloud/project/evento_aula2/figuras/grafico_regressao.png')
+```
+
+### Como reproveitar o código acima para outros dados
+
+Na hipótese proposta, seria possível apenas substituir no código os valores para realizar outro gráfico, mas vamos copiar abaixo.
+
+```{r}
+ind_socioecon <- read_excel('evento_aula2/dados/ind_socio_econ.xlsx')
+summary(ind_socioecon)
+```
+
+```{r}
+ggplot(ind_socioecon, aes(x=esp_vida,y=t_env))+
+  geom_point(shape=21, size=2.5, fill='lightblue', col='blue')+
+  geom_smooth(method='lm', col='tomato', se=FALSE,  formula='y ~ x')+
+  stat_regline_equation(
+    aes(label=paste(..eq.label..,..rr.label.., sep='~~~'))
+    )+
+  labs(x='Taxa de Envelhecimento', y='Esperança de Vida', Title='Gráfico de Regressão')+
+  theme_light()
+```
+
+```{r}
+ggsave(filename = '/cloud/project/evento_aula2/figuras/grafico_regressao_tx_es.png')
+```
